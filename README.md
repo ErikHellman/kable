@@ -442,6 +442,13 @@ peripheral.write(descriptor, byteArrayOf(1, 2, 3))
 > [!NOTE]
 > _The [`read`] and [`write`] functions throw [`NotConnectedException`] until a connection is established._
 
+#### ATT MTU size
+
+Since GATT has a limit (Maximum Transmit Unit, MTU) for how much data can be sent in each message, you'll need to 
+check that the size of the `ByteArray` doesn't exceed this limit. This is supported in the API through the method 
+[`maximumWriteValueLengthForType`] and will return the ATT MTU size, minus the ATT header size (3 bytes). 
+This value can then be used to chunk up your outgoing data in order to stay below the MTU limit.
+
 ### Observation
 
 Bluetooth Low Energy provides the capability of subscribing to characteristic changes by means of notifications and/or
